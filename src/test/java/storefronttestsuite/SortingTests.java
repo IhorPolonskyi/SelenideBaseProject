@@ -2,6 +2,8 @@ package storefronttestsuite;
 
 import com.codeborne.selenide.Condition;
 import io.restassured.http.ContentType;
+import io.restassured.mapper.ObjectMapperType;
+import io.restassured.path.json.JsonPath;
 import lombok.extern.java.Log;
 import org.testng.annotations.Test;
 import pageobjects.FiltersPagePart;
@@ -24,8 +26,8 @@ public class SortingTests extends BaseTest {
 
         open(Constants.PRODUCTS_URL);
         new FiltersPagePart()
-               .openSortingDropDown(SortingTypes.PLATFORM_TYPES)
-               .selectCheckBoxByName(Constants.WORDPRESS_THEMES);
+                .openSortingDropDown(SortingTypes.PLATFORM_TYPES)
+                .selectCheckBoxByName(Constants.WORDPRESS_THEMES);
 
         SearchPage searchPage = new SearchPage();
 
@@ -41,12 +43,12 @@ public class SortingTests extends BaseTest {
         //check template types at api
         searchPage.getAllTemplateId().forEach(id ->
                 assertEquals(
-                given().contentType(ContentType.JSON)
-                        .log().method().log().uri()
-                        .when().get(Constants.PRODUCTS_V2_URL + id)
-                        .then().statusCode(200)
-                        .extract().body().jsonPath().getString("typeName"),
-                Constants.WORDPRESS_THEME));
+                        given().contentType(ContentType.JSON)
+                                .log().method().log().uri()
+                                .when().get(Constants.PRODUCTS_V2_URL + id)
+                                .then().statusCode(200)
+                                .extract().body().jsonPath().getString("typeName"),
+                        Constants.WORDPRESS_THEME));
     }
 
     @Test
@@ -68,14 +70,14 @@ public class SortingTests extends BaseTest {
         searchPage.getCardProductsTypes()
                 .forEach(type ->
                         //check that all founded products has wordpress type
-                                assertTrue(
-                                        type.getText().contains(Constants.WEBSITE_TEMPLATES)
-                                                |type.getText().contains(Constants.WORDPRESS_THEMES)));
+                        assertTrue(
+                                type.getText().contains(Constants.WEBSITE_TEMPLATES)
+                                        | type.getText().contains(Constants.WORDPRESS_THEMES)));
 
         assertTrue(url().contains("bestsellers/types/wordpress_themes/website_templates/"));
 
         //check template types at api
-        searchPage.getAllTemplateId().forEach(id ->{
+        searchPage.getAllTemplateId().forEach(id -> {
             String templateTypeApi = given()
                     .contentType(ContentType.JSON)
                     .log().method().log().uri()
@@ -85,7 +87,7 @@ public class SortingTests extends BaseTest {
 
             assertTrue(
                     templateTypeApi.contains(Constants.WEBSITE_TEMPLATE)
-                            |templateTypeApi.contains(Constants.WORDPRESS_THEME));
+                            | templateTypeApi.contains(Constants.WORDPRESS_THEME));
         });
     }
 
@@ -130,18 +132,19 @@ public class SortingTests extends BaseTest {
         assertTrue(url().contains("bestsellers/features/responsive/"));
 
         //check template types at api
-        searchPage.getAllTemplateId().forEach(id ->
-                assertEquals(
-                        given().contentType(ContentType.JSON)
-                                .log().method().log().uri()
-                                .when().get(Constants.PRODUCTS_V2_URL + id)
-                                .then().statusCode(200)
-                                .extract().body().jsonPath().getList("features")
-                                .get(0)
-                                .toString(),
-                        Constants.RESPONSIVE));
-    }
+        searchPage.getAllTemplateId().forEach(id -> {
 
+            String features = given().contentType(ContentType.JSON)
+                    .log().method().log().uri()
+                    .when().get(Constants.PRODUCTS_V2_URL + id)
+                    .then().statusCode(200)
+                    .extract().body().jsonPath().get("properties.features")
+                    .toString();
+            log.info(features + " of template " + id);
+
+            assertTrue(features.contains(Constants.RESPONSIVE) | features.contains("Multipurpose"));
+        });
+    }
 }
 
 
