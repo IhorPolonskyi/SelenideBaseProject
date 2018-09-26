@@ -7,6 +7,8 @@ import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
 
+import static com.codeborne.selenide.WebDriverRunner.clearBrowserCache;
+
 @Log
 public class BaseTest {
 
@@ -21,7 +23,6 @@ public class BaseTest {
         Configuration.baseUrl = baseUrl;
         Configuration.timeout = 10000;
         Configuration.collectionsTimeout = 10000;
-        Configuration.screenshots = true;
         Configuration.remote = getGrid(gridValue, port);
     }
 
@@ -30,6 +31,7 @@ public class BaseTest {
         log.info("Test finished");
         Selenide.clearBrowserCookies();
         Selenide.clearBrowserLocalStorage();
+        clearBrowserCache();
     }
 
     private String getGrid(String gridValue, String port) {

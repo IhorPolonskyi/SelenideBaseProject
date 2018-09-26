@@ -12,4 +12,10 @@
         </classes>
     </test>
 
+    <test name="SortingTests">
+        <classes>
+            <class name="storefronttestsuite.SortingTests"/>
+        </classes>
+    </test>
+
 </suite>
