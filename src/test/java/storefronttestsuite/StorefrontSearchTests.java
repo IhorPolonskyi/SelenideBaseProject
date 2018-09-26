@@ -47,7 +47,7 @@ public class StorefrontSearchTests extends BaseTest{
                         type.shouldHave(Condition.text(Constants.JOOMLA)));
     }
 
-    @Test(enabled = false) //bug
+    @Test
     public void test_003_unSuccessSearch() {
 
         open(Constants.PRODUCTS_URL);

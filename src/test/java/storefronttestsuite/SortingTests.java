@@ -2,8 +2,6 @@ package storefronttestsuite;
 
 import com.codeborne.selenide.Condition;
 import io.restassured.http.ContentType;
-import io.restassured.mapper.ObjectMapperType;
-import io.restassured.path.json.JsonPath;
 import lombok.extern.java.Log;
 import org.testng.annotations.Test;
 import pageobjects.FiltersPagePart;

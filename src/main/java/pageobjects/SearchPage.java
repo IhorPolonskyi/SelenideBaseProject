@@ -5,12 +5,10 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import services.enums.ClickType;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.$;
