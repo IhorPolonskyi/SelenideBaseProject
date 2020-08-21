@@ -2,6 +2,7 @@ package services;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
+import com.codeborne.selenide.testng.ScreenShooter;
 import lombok.extern.java.Log;
 import org.testng.annotations.*;
 
@@ -10,6 +11,7 @@ import java.net.MalformedURLException;
 import static com.codeborne.selenide.WebDriverRunner.clearBrowserCache;
 
 @Log
+@Listeners({ ScreenShooter.class})
 public class BaseTest {
 
     @Parameters({"browser","baseUrl", "server","port"})
